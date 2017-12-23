@@ -1,0 +1,2 @@
+curl -X PUT --user name:password --header "Content-Type: application/json" --header "Accept: application/json" -d '{"shelf": "currentlyReading"}' https://reactnd-books-api.udacity.com/books/nggnmAEACAAJ
+{"currentlyReading":["nggnmAEACAAJ","sJf1vQAACAAJ"],"wantToRead":["evuwdDLfAyYC","74XNzF_al3MC"],"read":["jAUODAAAQBAJ","IOejDAAAQBAJ","1wy49i-gQjIC"]}
