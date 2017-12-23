@@ -7,7 +7,7 @@ For reading book information and persisting the shelf status the Udacity Book AP
 2. search - searches books by title/author  substring
 3. update - updates the shelf for a specific book when the user selects the book menu
 
-#Instructions to run:
+Instructions to run:
 ```
 #install latest node js and npm
 git clone https://github.com/oliverhager29/MyReads
