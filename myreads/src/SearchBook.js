@@ -61,6 +61,8 @@ class SearchBook extends Component {
                                         title={book.title}
                                         authors={(book.authors?book.authors:[])}
                                         shelf={(book.shelf?book.shelf:"none")}
+                                        averageRating={(book.averageRating?book.averageRating:0)}
+                                        ratingsCount={(book.ratingsCount?book.ratingsCount:0)}
                                         id={(book.id?book.id:"none")}
                                     />
                                 </li>

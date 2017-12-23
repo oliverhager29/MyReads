@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './App.css'
 import * as BooksAPI from "./BooksAPI";
+import Rating from "react-rating"
 // import * as BooksAPI from './BooksAPI'
 
 class Book extends Component {
@@ -10,6 +11,8 @@ class Book extends Component {
         title: PropTypes.string.isRequired,
         authors: PropTypes.array.isRequired,
         shelf: PropTypes.string.isRequired,
+        averageRating: PropTypes.number.isRequired,
+        ratingsCount: PropTypes.number.isRequired,
         id: PropTypes.string.isRequired,
         handler: PropTypes.func
     }
@@ -23,6 +26,10 @@ class Book extends Component {
         authors: [],
         // book.shelf
         shelf: "none",
+        //book.averageRating
+        averageRating: 0,
+        //book.ratingsCount
+        ratingsCount:0,
         // book.id
         id: ""
     }
@@ -35,6 +42,8 @@ class Book extends Component {
             title: props.title,
             authors: props.authors,
             shelf: props.shelf,
+            averageRating: props.averageRating,
+            ratingsCount: props.ratingsCount,
             id: props.id
         };
     }
@@ -58,7 +67,7 @@ class Book extends Component {
     }
 
     render() {
-        const {thumbnailUrl, title, authors, shelf} = this.state
+        const {thumbnailUrl, title, authors, shelf, averageRating, ratingsCount} = this.state
         console.log(thumbnailUrl)
         const divStyle = {
             width: 128,
@@ -81,6 +90,14 @@ class Book extends Component {
                 </div>
                 <div className="book-title">{title}</div>
                 <div className="book-authors">{authors.join(',')}</div>
+                <div>
+                    <Rating
+                        initialRate={averageRating}
+                        readonly
+                    />
+                    <br/>
+                    {ratingsCount} {ratingsCount===1?'Rating':'Ratings'}
+                </div>
             </div>
         )
     }
