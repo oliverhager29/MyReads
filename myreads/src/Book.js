@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './App.css'
-import * as BooksAPI from "./BooksAPI";
 import Rating from "react-rating"
-// import * as BooksAPI from './BooksAPI'
 
 class Book extends Component {
     static propTypes = {
@@ -14,61 +12,42 @@ class Book extends Component {
         averageRating: PropTypes.number.isRequired,
         ratingsCount: PropTypes.number.isRequired,
         id: PropTypes.string.isRequired,
-        handler: PropTypes.func
+        updateBookHandler: PropTypes.func
     }
 
     state = {
-        // book.imageLinks.thumbnail
-        thumbnailUrl: "",
-        // book.title
-        title: "",
-        // book.authors
-        authors: [],
-        // book.shelf
-        shelf: "none",
-        //book.averageRating
-        averageRating: 0,
-        //book.ratingsCount
-        ratingsCount:0,
-        // book.id
-        id: ""
+        shelf: "none"
     }
 
     constructor(props) {
         super(props);
-
         this.state = {
-            thumbnailUrl: props.thumbnailUrl,
-            title: props.title,
-            authors: props.authors,
-            shelf: props.shelf,
-            averageRating: props.averageRating,
-            ratingsCount: props.ratingsCount,
-            id: props.id
+            shelf: props.shelf
         };
     }
 
-    //handleChange(event) {
-    handleChange = (event) => {
-        const bookToUpdate = {id: this.state.id};
-        const shelf = event.target.value;
-        BooksAPI.update(bookToUpdate, event.target.value).then(
-            (result) => {
-                this.setState({shelf: shelf});
-                if(this.props.handler) {
-                    this.props.handler();
-                }
-            }
-        )
+    updateShelf(shelf) {
+        if(this.props.updateBookHandler) {
+            this.props.updateBookHandler({thumbnailUrl: this.props.thumbnailUrl, title: this.props.title,
+                authors: this.props.authors, shelf: shelf,
+                averageRating: this.props.averageRating, ratingsCount: this.props.ratingsCount,
+                id: this.props.id}, shelf)
+        }
+        this.setState({shelf: shelf})
     }
+
+    handleChange = (event) => {
+        this.updateShelf(event.target.value);
+    }
+
 
     handleSubmit = (e) => {
         e.preventDefault()
     }
 
     render() {
-        const {thumbnailUrl, title, authors, shelf, averageRating, ratingsCount} = this.state
-        console.log(thumbnailUrl)
+        const {thumbnailUrl, title, authors, averageRating, ratingsCount} = this.props
+        const newShelf = this.state.shelf
         const divStyle = {
             width: 128,
             height: 193,
@@ -79,8 +58,8 @@ class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={divStyle}></div>
                     <div className="book-shelf-changer">
-                        <select value={shelf} onChange={this.handleChange}>
-                            <option value="none" disabled>Move to...</option>
+                        <select value={newShelf} onChange={this.handleChange}>
+                            <option value="" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
                             <option value="read">Read</option>
